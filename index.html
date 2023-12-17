@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Types of triangles</title>
+</head>
+<body>
+    <form id="triangleForm">
+        <label for="S1">กรอกค่าสำหรับด้านที่ 1:</label>
+        <input type="number" id="S1" required>
+        <br>
+        <label for="S2">กรอกค่าสำหรับด้านที่ 2:</label>
+        <input type="number" id="S2" required>
+        <br>
+        <label for="S3">กรอกค่าสำหรับด้านที่ 3:</label>
+        <input type="number" id="S3" required>
+        <br><br>
+        <button type="button" onclick="checkTriangle()">ตรวจสอบ</button>
+    </form>
+    <p id="result"></p>
+    <p id="error"></p>
+
+    <script>
+        function checkTriangle() {
+            
+            var S1 = parseFloat(document.getElementById("S1").value);
+            var S2 = parseFloat(document.getElementById("S2").value);
+            var S3 = parseFloat(document.getElementById("S3").value);
+
+            
+            if (isValidTriangle(S1, S2, S3)) {
+        
+                var triangleType = getTriangleType(S1, S2, S3);
+                document.getElementById("result").innerHTML = "ประเภทของสามเหลี่ยมคือ สามเหลี่ยม" + triangleType;
+                document.getElementById("error").innerHTML = "";
+            } else {
+                document.getElementById("error").innerHTML = "Invalid input. Please enter valid side lengths.";
+                document.getElementById("result").innerHTML = "";
+            }
+        }
+
+        function isValidTriangle(a, b, c) {
+            return a + b > c && b + c > a && c + a > b;
+        }
+
+        function getTriangleType(a, b, c) {
+            if (a === b && b === c) {
+                return "equilateral";
+            } else if (a === b || b === c || c === a) {
+                return "isosceles";
+            } else {
+                return "scalene";
+            }
+        }
+    </script>
+</body>
+</html>
