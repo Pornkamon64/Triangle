@@ -19,9 +19,12 @@
 
         form {
             background-color: white;
-            padding: 100px;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            padding-left: 100px;
+            padding-right: 100px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             text-align: center;
         }
 
@@ -72,8 +75,10 @@
         <br><br>
         <button type="button" class="btn btn-info" onclick="checkTriangle()">ตรวจสอบ</button>
     </form>
-    <p id="result"></p>
-    <p id="error"></p>
+    <div id="result-container">
+        <p id="result"></p>
+        <p id="error"></p>
+    </div>
 
     <script>
         function checkTriangle() {
