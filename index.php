@@ -97,61 +97,61 @@
 
     <footer>
         <div id="result-container">
-            <p id="result"></p>
-            <p id="error"></p>
+            <?php
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                checkTriangle();
+            }
+
+            function checkTriangle() {
+                $Sa = isset($_POST["Sa"]) ? round(floatval($_POST["Sa"]), 2) : 0.0;
+                $Sb = isset($_POST["Sb"]) ? round(floatval($_POST["Sb"]), 2) : 0.0;
+                $Sc = isset($_POST["Sc"]) ? round(floatval($_POST["Sc"]), 2) : 0.0;
+
+
+                if (isValidInputRange($Sa) && isValidInputRange($Sb) && isValidInputRange($Sc)) {
+                    if (isValidTriangle($Sa, $Sb, $Sc)) {
+                        $triangleType = getTriangleType($Sa, $Sb, $Sc);
+                        echo "<p id='result'>ประเภทของสามเหลี่ยมคือ: $triangleType</p>";
+
+                    } else {
+                        echo "<p id='error'>ไม่ใช่สามเหลี่ยม (Not a Triangle)</p>";
+                    }
+                } else {
+                    echo "<p id='error'>การตรวจสอบรับค่าแค่ 0.00 - 100.00 เท่านั้น กรุณากรอกใหม่อีกครั้ง</p>";
+                }
+            }
+
+            function isValidInputRange($value) {
+                return is_numeric($value) && $value >= 0.00 && $value <= 100.00;
+            }
+
+            function isValidTriangle($a, $b, $c) {
+                return $a + $b > $c || $b + $c > $a || $c + $a > $b;
+            }
+            
+
+            function getTriangleType($a, $b, $c) {
+                if (isValidTriangle($a, $b, $c)) {
+                    if ($a === $b && $b === $c) {
+                        return "Equilateral Triangle";
+                    } elseif ($a === $b || $b === $c || $c === $a) {
+                        return "Isosceles Triangle";
+                    } elseif (isRightTriangle($a, $b, $c)) {
+                        return "Right Triangle";
+                    } elseif ($a !== $b && $b !== $c && $c !== $a) {
+                        return "Scalene Triangle";
+                    }
+                }
+            }
+
+            function isRightTriangle($a, $b, $c) {
+                $sides = [$a, $b, $c];
+                sort($sides);
+                return pow($sides[0], 2) + pow($sides[1], 2) === pow($sides[2], 2);
+            }
+            ?>
         </div>
     </footer>
-
-<?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        checkTriangle();
-    }
-
-    function checkTriangle() {
-        $Sa = isset($_POST["Sa"]) ? round(floatval($_POST["Sa"]), 2) : 0.0;
-        $Sb = isset($_POST["Sb"]) ? round(floatval($_POST["Sb"]), 2) : 0.0;
-        $Sc = isset($_POST["Sc"]) ? round(floatval($_POST["Sc"]), 2) : 0.0;
-
-        if (isValidInputRange($Sa) && isValidInputRange($Sb) && isValidInputRange($Sc)) {
-            if (isValidTriangle($Sa, $Sb, $Sc)) {
-                $triangleType = getTriangleType($Sa, $Sb, $Sc);
-                echo "<p id='result'>ประเภทของสามเหลี่ยมคือ << $triangleType >></p>";
-            } else {
-                echo "Not a Triangle";
-            }
-        } else {
-            echo "การตรวจสอบรับค่าแค่ 0.00 - 100.00 เท่านั้น กรุณากรอกใหม่อีกครั้ง";
-        }
-    }
-
-    function isValidInputRange($value) {
-        return is_numeric($value) && $value >= 0.00 && $value <= 100.00;
-    }
-
-    function isValidTriangle($a, $b, $c) {
-        return $a + $b > $c && $b + $c > $a && $c + $a > $b;
-    }
-
-    function getTriangleType($a, $b, $c) {
-        if (isValidTriangle($a, $b, $c)) {
-            if ($a === $b && $b === $c) {
-                return "Equilateral Triangle";
-            } elseif ($a === $b || $b === $c || $c === $a) {
-                return "Isosceles Triangle";
-            } elseif (isRightTriangle($a, $b, $c)) {
-                return "Right Triangle";
-            } elseif ($a !== $b && $b !== $c && $c !== $a) {
-                return "Scalene Triangle";
-            }
-        }
-    }
-
-    function isRightTriangle($a, $b, $c) {
-        $sides = [$a, $b, $c];
-        sort($sides);
-        return pow($sides[0], 2) + pow($sides[1], 2) === pow($sides[2], 2);
-    }
-?>
 
 </body>
 </html>
