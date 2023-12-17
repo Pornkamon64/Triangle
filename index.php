@@ -76,17 +76,17 @@
             <tr>
                 
                 <td><label for="Sa">กรอกค่าสำหรับด้านที่ 1:</label></td>
-                <td><input type="number" name="Sa" id="Sa" step="0.01" required></td>
+                <td><input type="text" pattern="[0-9]*(\.[0-9]+)?" name="Sa" id="Sa" required></td>
 
             </tr>
             <tr>
                 <td><label for="Sb">กรอกค่าสำหรับด้านที่ 2:</label></td>
-                <td><input type="number" name="Sb" id="Sb" step="0.01" required></td>
+                <td><input type="text" pattern="[0-9]*(\.[0-9]+)?" name="Sb" id="Sb" required></td>
 
             </tr>
             <tr>
                 <td><label for="Sc">กรอกค่าสำหรับด้านที่ 3:</label></td>
-                <td><input type="number" name="Sc" id="Sc" step="0.01" required></td>
+                <td><input type="text" pattern="[0-9]*(\.[0-9]+)?" name="Sc" id="Sc" required></td>
 
             </tr>
         </table>
@@ -152,6 +152,7 @@
             ?>
         </div>
     </footer>
-
+    
+   
 </body>
 </html>
