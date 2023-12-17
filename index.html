@@ -112,11 +112,9 @@
                     return "Isosceles Triangle";
                 } else if (isRightTriangle(a, b, c)) {
                     return "Right Triangle";
-                } else {
+                } else if(a !== b && b !== c && c !== a){
                     return "Scalene Triangle";
                 }
-            } else {
-                return "Not a Triangle";
             }
         }
         function isRightTriangle(a, b, c) {
