@@ -11,15 +11,14 @@
             margin: 0;
             padding: 0;
             display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            height: 100vh;
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+            min-height: 100vh; /* Ensure the entire viewport height is covered */
         }
 
         form {
             background-color: white;
-            padding: 10px;
-            margin-top: 70px;
+            padding: 20px; /* Increased padding for better appearance */
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             text-align: center;
@@ -75,16 +74,20 @@
         <p>เงื่อนไขที่จะตรวจสอบได้คือสองด้านใดๆก็ตามรวมกันต้องมากกว่าด้านที่เหลือเท่านั้น</p>
         <table style="width: 100%;">
             <tr>
+                
                 <td><label for="Sa">กรอกค่าสำหรับด้านที่ 1:</label></td>
-                <td><input type="number" name="Sa" id="Sa" required></td>
+                <td><input type="number" name="Sa" id="Sa" step="0.01" required></td>
+
             </tr>
             <tr>
                 <td><label for="Sb">กรอกค่าสำหรับด้านที่ 2:</label></td>
-                <td><input type="number" name="Sb" id="Sb" required></td>
+                <td><input type="number" name="Sb" id="Sb" step="0.01" required></td>
+
             </tr>
             <tr>
                 <td><label for="Sc">กรอกค่าสำหรับด้านที่ 3:</label></td>
-                <td><input type="number" name="Sc" id="Sc" required></td>
+                <td><input type="number" name="Sc" id="Sc" step="0.01" required></td>
+
             </tr>
         </table>
 
@@ -94,72 +97,61 @@
 
     <footer>
         <div id="result-container">
-            <div id="result-container">
-                <p id="result"></p>
-                <p id="error"></p>
-            </div>
+            <p id="result"></p>
+            <p id="error"></p>
         </div>
     </footer>
-</body>
-</html>
 
 <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        checkTriangle();
+    }
 
-function checkTriangle() {
-    $Sa = isset($_POST["Sa"]) ? floatval($_POST["Sa"]) : 0.0;
-    $Sb = isset($_POST["Sb"]) ? floatval($_POST["Sb"]) : 0.0;
-    $Sc = isset($_POST["Sc"]) ? floatval($_POST["Sc"]) : 0.0;
+    function checkTriangle() {
+        $Sa = isset($_POST["Sa"]) ? round(floatval($_POST["Sa"]), 2) : 0.0;
+        $Sb = isset($_POST["Sb"]) ? round(floatval($_POST["Sb"]), 2) : 0.0;
+        $Sc = isset($_POST["Sc"]) ? round(floatval($_POST["Sc"]), 2) : 0.0;
 
-    if (isValidInputRange($Sa) && isValidInputRange($Sb) && isValidInputRange($Sc)) {
-        if (isValidTriangle($Sa, $Sb, $Sc)) {
-            $triangleType = getTriangleType($Sa, $Sb, $Sc);
-            echo "<p id='result'>ประเภทของสามเหลี่ยมคือ << $triangleType >></p>";
-            echo "<p id='error'></p>";
+        if (isValidInputRange($Sa) && isValidInputRange($Sb) && isValidInputRange($Sc)) {
+            if (isValidTriangle($Sa, $Sb, $Sc)) {
+                $triangleType = getTriangleType($Sa, $Sb, $Sc);
+                echo "<p id='result'>ประเภทของสามเหลี่ยมคือ << $triangleType >></p>";
+            } else {
+                echo "Not a Triangle";
+            }
         } else {
-            echo "<p id='result'></p>";
-            echo "<p id='error'>Not a Triangle</p>";
-        }
-    } else {
-        echo "<p id='result'></p>";
-        echo "<p id='error'>การตรวจสอบรับค่าแค่ 0.00 - 100.00 เท่านั้น กรุณากรอกใหม่อีกครั้ง</p>";
-    }
-}
-
-function isValidInputRange($value) {
-    return is_numeric($value) && $value >= 0.00 && $value <= 100.00;
-}
-
-function isValidTriangle($a, $b, $c) {
-    return $a + $b > $c && $b + $c > $a && $c + $a > $b;
-}
-
-function getTriangleType($a, $b, $c) {
-    if (isValidTriangle($a, $b, $c)) {
-        if ($a === $b && $b === $c) {
-            return "Equilateral Triangle";
-        } elseif
-        ($a === $b || $b === $c || $c === $a) {
-            return "Isosceles Triangle";
-        } elseif (isRightTriangle($a, $b, $c)) {
-            return "Right Triangle";
-        } elseif ($a !== $b && $b !== $c && $c !== $a) {
-            return "Scalene Triangle";
+            echo "การตรวจสอบรับค่าแค่ 0.00 - 100.00 เท่านั้น กรุณากรอกใหม่อีกครั้ง";
         }
     }
-}
 
-function isRightTriangle($a, $b, $c) {
-    $sides = [$a, $b, $c];
-    sort($sides);
-    return pow($sides[0], 2) + pow($sides[1], 2) === pow($sides[2], 2);
-}
+    function isValidInputRange($value) {
+        return is_numeric($value) && $value >= 0.00 && $value <= 100.00;
+    }
 
-// Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    checkTriangle();
-}
+    function isValidTriangle($a, $b, $c) {
+        return $a + $b > $c && $b + $c > $a && $c + $a > $b;
+    }
+
+    function getTriangleType($a, $b, $c) {
+        if (isValidTriangle($a, $b, $c)) {
+            if ($a === $b && $b === $c) {
+                return "Equilateral Triangle";
+            } elseif ($a === $b || $b === $c || $c === $a) {
+                return "Isosceles Triangle";
+            } elseif (isRightTriangle($a, $b, $c)) {
+                return "Right Triangle";
+            } elseif ($a !== $b && $b !== $c && $c !== $a) {
+                return "Scalene Triangle";
+            }
+        }
+    }
+
+    function isRightTriangle($a, $b, $c) {
+        $sides = [$a, $b, $c];
+        sort($sides);
+        return pow($sides[0], 2) + pow($sides[1], 2) === pow($sides[2], 2);
+    }
 ?>
 
-
-
-
+</body>
+</html>
