@@ -60,6 +60,14 @@
             font-weight: bold;
             color: #333;
         }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            text-align: center;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -75,10 +83,12 @@
         <br><br>
         <button type="button" class="btn btn-info" onclick="checkTriangle()">ตรวจสอบ</button>
     </form>
-    <div id="result-container">
-        <p id="result"></p>
-        <p id="error"></p>
-    </div>
+    <footer>
+        <div id="result-container">
+            <p id="result"></p>
+            <p id="error"></p>
+        </div>
+    </footer>
 
     <script>
         function checkTriangle() {
