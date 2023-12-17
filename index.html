@@ -85,11 +85,7 @@
                     var triangleType = getTriangleType(Sa, Sb, Sc);
                     document.getElementById("result").innerHTML = "ประเภทของสามเหลี่ยมคือ << " + triangleType + " >>";
                     document.getElementById("error").innerHTML = "";
-                } else {
-                    document.getElementById("error").innerHTML = "กรอกข้อมูลไม่ถูกต้องกรุณากรอกใหม่อีกครั้ง";
-                    document.getElementById("result").innerHTML = "";
-                }
-            } else {
+                }else {
                 document.getElementById("error").innerHTML = "การตรวจสอบรับค่าแค่ 0.00 - 100.00 เท่านั้นกรุณากรอกใหม่อีกครั้ง";
                 document.getElementById("result").innerHTML = "";
             }
