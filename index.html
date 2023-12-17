@@ -23,22 +23,32 @@
 
     <script>
         function checkTriangle() {
-            
             var Sa = parseFloat(document.getElementById("Sa").value);
             var Sb = parseFloat(document.getElementById("Sb").value);
             var Sc = parseFloat(document.getElementById("Sc").value);
 
-            
+        if (isValidInputRange(Sa) && isValidInputRange(Sb) && isValidInputRange(Sc)) {
             if (isValidTriangle(Sa, Sb, Sc)) {
-        
                 var triangleType = getTriangleType(Sa, Sb, Sc);
-                document.getElementById("result").innerHTML = "ประเภทของสามเหลี่ยมคือ สามเหลี่ยม" + triangleType;
+                document.getElementById("result").innerHTML = "ประเภทของสามเหลี่ยมคือ << " + triangleType+" >>";
                 document.getElementById("error").innerHTML = "";
             } else {
                 document.getElementById("error").innerHTML = "Invalid input. Please enter valid side lengths.";
                 document.getElementById("result").innerHTML = "";
-            }
         }
+            } else {
+                document.getElementById("error").innerHTML = "Invalid input range. Please enter values between 0.00 and 100.00.";
+                document.getElementById("result").innerHTML = "";
+        }
+    }
+
+        function isValidInputRange(value) {
+            return !isNaN(value) && value >= 0.00 && value <= 100.00;
+    }
+
+        function isValidTriangle(a, b, c) {
+            return a + b > c && b + c > a && c + a > b;
+    }
 
         function getTriangleType(a, b, c) {
             if (!isValidTriangle(a, b, c)) {
@@ -59,10 +69,6 @@
         function isRightTriangle(a, b, c) {
             var sides = [a, b, c].sort((x, y) => x - y);
             return Math.pow(sides[0], 2) + Math.pow(sides[1], 2) === Math.pow(sides[2], 2);
-        }
-
-        function isValidTriangle(a, b, c) {
-            return a + b > c && b + c > a && c + a > b;
         }
     </script>
 </body>
