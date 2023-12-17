@@ -147,6 +147,62 @@ function isRightTriangle($a, $b, $c) {
     <br><br>
     <button type="submit" class="btn btn-info">ตรวจสอบ</button>
 </form>
+
+<?php
+function checkTriangle() {
+    $Sa = isset($_POST["Sa"]) ? floatval($_POST["Sa"]) : 0.0;
+    $Sb = isset($_POST["Sb"]) ? floatval($_POST["Sb"]) : 0.0;
+    $Sc = isset($_POST["Sc"]) ? floatval($_POST["Sc"]) : 0.0;
+
+    if (isValidInputRange($Sa) && isValidInputRange($Sb) && isValidInputRange($Sc)) {
+        if (isValidTriangle($Sa, $Sb, $Sc)) {
+            $triangleType = getTriangleType($Sa, $Sb, $Sc);
+            echo "ประเภทของสามเหลี่ยมคือ << $triangleType >>";
+        } else {
+            echo "Not a Triangle";
+        }
+    } else {
+        echo "การตรวจสอบรับค่าแค่ 0.00 - 100.00 เท่านั้น กรุณากรอกใหม่อีกครั้ง";
+    }
+}
+
+function isValidInputRange($value) {
+    return is_numeric($value) && $value >= 0.00 && $value <= 100.00;
+}
+
+function isValidTriangle($a, $b, $c) {
+    return $a + $b > $c && $b + $c > $a && $c + $a > $b;
+}
+
+function getTriangleType($a, $b, $c) {
+    if (isValidTriangle($a, $b, $c)) {
+        if ($a === $b && $b === $c) {
+            return "Equilateral Triangle";
+        } elseif ($a === $b || $b === $c || $c === $a) {
+            return "Isosceles Triangle";
+        } elseif (isRightTriangle($a, $b, $c)) {
+            return "Right Triangle";
+        } elseif ($a !== $b && $b !== $c && $c !== $a) {
+            return "Scalene Triangle";
+        }
+    }
+}
+
+function isRightTriangle($a, $b, $c) {
+    $sides = [$a, $b, $c];
+    sort($sides);
+    return pow($sides[0], 2) + pow($sides[1], 2) === pow($sides[2], 2);
+}
+
+// Check if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    checkTriangle();
+}
+?>
+
+
+
+
 <footer>
     <div id="result-container">
         <p id="result"></p>
@@ -154,53 +210,6 @@ function isRightTriangle($a, $b, $c) {
     </div>
 </footer>
 
-<script>
-    function checkTriangle() {
-        var Sa = parseFloat(document.getElementById("Sa").value);
-        var Sb = parseFloat(document.getElementById("Sb").value);
-        var Sc = parseFloat(document.getElementById("Sc").value);
 
-        if (isValidInputRange(Sa) && isValidInputRange(Sb) && isValidInputRange(Sc)) {
-            if (isValidTriangle(Sa, Sb, Sc)) {
-                var triangleType = getTriangleType(Sa, Sb, Sc);
-                document.getElementById("result").innerHTML = "ประเภทของสามเหลี่ยมคือ << " + triangleType + " >>";
-                document.getElementById("error").innerHTML = "";
-            } else {
-                document.getElementById("result").innerHTML = "";
-                document.getElementById("error").innerHTML = "Not a Triangle";
-            }
-        } else {
-            document.getElementById("result").innerHTML = "";
-            document.getElementById("error").innerHTML = "การตรวจสอบรับค่าแค่ 0.00 - 100.00 เท่านั้น กรุณากรอกใหม่อีกครั้ง";
-        }
-    }
-
-    function isValidInputRange(value) {
-        return !isNaN(value) && value >= 0.00 && value <= 100.00;
-    }
-
-    function isValidTriangle(a, b, c) {
-        return a + b > c && b + c > a && c + a > b;
-    }
-
-    function getTriangleType(a, b, c) {
-        if (isValidTriangle(a, b, c)) {
-            if (a === b && b === c) {
-                return "Equilateral Triangle";
-            } else if (a === b || b === c || c === a) {
-                return "Isosceles Triangle";
-            } else if (isRightTriangle(a, b, c)) {
-                return "Right Triangle";
-            } else if (a !== b && b !== c && c !== a) {
-                return "Scalene Triangle";
-            }
-        }
-    }
-
-    function isRightTriangle(a, b, c) {
-        var sides = [a, b, c].sort((x, y) => x - y);
-        return Math.pow(sides[0], 2) + Math.pow(sides[1], 2) === Math.pow(sides[2], 2);
-    }
-</script>
 </body>
 </html>
