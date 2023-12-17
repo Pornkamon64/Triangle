@@ -153,6 +153,22 @@
         </div>
     </footer>
     
+    <script>
+    document.addEventListener('input', function (e) {
+        if (e.target.tagName.toLowerCase() === 'input' && e.target.type === 'text') {
+            e.target.value = e.target.value.replace(/[^\d.]/g, ''); // Allow only digits and dots
+        }
+    });
+
+    // Add this part to ensure the form is submitted with numeric values
+    document.addEventListener('submit', function (e) {
+        var inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach(function (input) {
+            input.value = input.value.replace(/[^\d.]/g, ''); // Clean non-numeric characters before submission
+        });
+    });
+</script>
+
    
 </body>
 </html>
