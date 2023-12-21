@@ -103,9 +103,9 @@
             }
 
             function checkTriangle() {
-                $Sa = isset($_POST["Sa"]) ? round(floatval($_POST["Sa"]), 2) : 0.0;
-                $Sb = isset($_POST["Sb"]) ? round(floatval($_POST["Sb"]), 2) : 0.0;
-                $Sc = isset($_POST["Sc"]) ? round(floatval($_POST["Sc"]), 2) : 0.0;
+                $Sa = isset($_POST["Sa"]) ? (floatval($_POST["Sa"])) : 0.0;
+                $Sb = isset($_POST["Sb"]) ? (floatval($_POST["Sb"])) : 0.0;
+                $Sc = isset($_POST["Sc"]) ? (floatval($_POST["Sc"])) : 0.0;
 
 
                 if (isValidInputRange($Sa) && isValidInputRange($Sb) && isValidInputRange($Sc)) {
